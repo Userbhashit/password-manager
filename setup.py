@@ -13,7 +13,7 @@ def main():
     os.chmod(".key", 0o600) 
 
     # create a database 
-    print("Creating a databse.")
+    print("\nCreating a databse.")
     db = sqlite3.connect(".pass.db")
     pointer = db.cursor()
     pointer.execute("CREATE TABLE IF NOT EXISTS passwords (Id INTEGER PRIMARY KEY AUTOINCREMENT,label TEXT NOT NULL,username TEXT,password BLOB NOT NULL,date_created TEXT)")
@@ -28,15 +28,20 @@ def main():
         name.write(username)    
 
     while True:
+        # use get pass so the password is hidden
         password = getpass("Please provide a sepical password. This will be used to print all passwords: ")
         re_enter = getpass("Please re-enter the same password: ")
 
+        # Check if the password is valid
         if password != re_enter:
+            # if not prompt again
             print("Passwords does not match")
         else:
+            # If ye then encrypt the password and save it
             with open(".pass", "wb") as passs:
                 passs.write(key.encrypt(password.encode()))
             break
 
 if __name__ == "__main__":
     main()
+
