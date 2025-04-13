@@ -46,28 +46,35 @@ def main():
         decrypted_rows.append((id, label, username, password, date))
 
     print(tabulate(decrypted_rows, headers=["ID", "Website/Label", "UserName", "Password", "Created on"], tablefmt="pretty"))
-    
+
     while True:
-        try:
-            id = int(input("Enter the Id number you want to copy(or 0 to exit): "))
-            break
-        except ValueError:
-            print("Not a number.")
+        user_input = input("Enter the ID number to copy (or 0 to exit): ").strip()
+
+        if user_input == "0":
+            db.close()
+            return
+
+        if not user_input.isdigit():
+            print("Not a valid number.")
             continue
 
-    if id == 0:
-        return
-    else:
-        while True:
-            try:
-                pass_to_copy = pointer.execute("SELECT password FROM passwords WHERE id=?", (id,)).fetchone()
-                pass_to_copy = f.decrypt(pass_to_copy[0]).decode()
-                pyperclip.copy(pass_to_copy)
-                print("Copied to clipboard.")
-                break
-            except:
-                print("Please enter a valid ID.")
-    db.close()
+        id = int(user_input)
+        result = pointer.execute("SELECT password FROM passwords WHERE id = ?", (id,)).fetchone()
+
+        if result is None:
+            print(f"No password found with ID {id}. Try again.")
+            continue
+
+        try:
+            decrypted_pass = f.decrypt(result[0]).decode()
+            pyperclip.copy(decrypted_pass)
+            print("Password copied to clipboard.")
+            break
+        except Exception as e:
+            print(f"Failed to decrypt password: {e}")
+            break  # or continue if you want to let the user try again
+
 
 if __name__ == "__main__":
     main()
+

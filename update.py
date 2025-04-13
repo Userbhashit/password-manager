@@ -3,8 +3,23 @@ from getpass import getpass
 from cryptography.fernet import Fernet
 
 def main():
-    update_pass()
-    delete_pass()
+    while True:
+        print("\n=== Password Manager ===")
+        print("1. Update a password")
+        print("2. Delete a password")
+        print("3. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            update_pass()
+        elif choice == "2":
+            delete_pass()
+        elif choice == "3":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.")
 
 def update_pass():
     label_or_id = input("Would you like to update using??\nPress '1' for id or '2' for label/website name or anyother key to cancel: ")
@@ -141,7 +156,11 @@ def delete_by_label():
 
     label = input("Enter the label/website name to delete: ").strip()
 
-    result = pointer.execute("SELECT id FROM passwords WHERE label = ?", (label,)).fetchone()
+    result = pointer.execute(
+        "SELECT id FROM passwords WHERE label LIKE ? COLLATE NOCASE",
+        (f"%{label}%",)
+    ).fetchone()
+
     if result is None:
         print(f"No entry found for label '{label}'")
         db.close()
@@ -161,3 +180,4 @@ def delete_by_label():
 
 if __name__ == "__main__":
     main()
+

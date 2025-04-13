@@ -1,5 +1,6 @@
 import sqlite3
 import datetime
+import getpass
 from cryptography.fernet import Fernet
 
 def save():
@@ -11,7 +12,7 @@ def save():
 
     username = input("username: ")
 
-    password = input("password: ")
+    password = getpass.getpass("password: ")
     while not password:
         print("Password cannot be empty.")
         password = input("password: ")
