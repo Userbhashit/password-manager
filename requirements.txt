@@ -1,2 +1,5 @@
 cryptography
 pyfiglet
+pyperclip
+tabulate
+
