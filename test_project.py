@@ -1,8 +1,9 @@
-from genrate import generate, LETTERS_LOWER, LETTERS_UPPER, NUMBERS, SYMBOLS
-from unittest.mock import patch, mock_open
-from project import welcome_user, reset
-from pyfiglet import Figlet 
 import os
+import pytest
+from pyfiglet import Figlet 
+from unittest.mock import patch, mock_open
+from project import welcome_user, reset, check_os
+from genrate import generate, LETTERS_LOWER, LETTERS_UPPER, NUMBERS, SYMBOLS
 
 
 def test_welcome_user(capfd):
@@ -52,6 +53,7 @@ def test_generate():
             if num_password > 1:
                 assert len(set(passwords)) > 1
 
+
 def test_reset():
     reset()
 
@@ -59,3 +61,22 @@ def test_reset():
     assert (os.path.exists(".user") == False)
     assert (os.path.exists(".pass.db") == False)
     assert (os.path.exists(".pass") == False)
+
+# test_os_check.py
+@pytest.mark.parametrize(
+    "mock_os, expected_exit",
+    [
+        ("Darwin", False),   # macOS (should not exit)
+        ("Linux", False),    # Linux (should not exit)
+        ("Windows", True),   # Unsupported OS (should exit)
+        ("OtherOS", True),   # Unsupported OS (should exit)
+    ]
+)
+def test_check_os(mock_os, expected_exit):
+    with patch("platform.system", return_value=mock_os):
+        if expected_exit:
+            with pytest.raises(SystemExit):  # Check if the program exits
+                check_os()
+        else:
+            check_os()  # If not expected to exit, just run the function
+
