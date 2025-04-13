@@ -1,4 +1,6 @@
 import os
+import sys
+import platform
 from save import save 
 from pyfiglet import Figlet
 from setup import main as setup
@@ -8,7 +10,8 @@ from update import delete_pass, update_pass
 from save_random import main as genrate_save    
 
 def main():
-    
+
+    check_os()
     # If new user setup all the required files
     if not setedup():
         setup()
@@ -52,6 +55,17 @@ def main():
                 return
             case _:
                 print("Please enter a number between 1 to 7")
+
+
+def check_os():
+    # Make sure that the user is using macOS or Linux 
+    os_name = platform.system().lower()
+
+    if os_name == "darwin" or os_name == "linux":
+        print("You are using macOS!")
+    else:
+        print("This application is designed for macOS or Linux only.")
+        sys.exit(1)  
 
 # check if user have created logged in before or not
 def setedup():
