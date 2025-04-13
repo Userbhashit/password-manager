@@ -59,7 +59,7 @@ The CLI-based interface makes it fast and accessible for developers and power us
 
 This project helped me understand and apply concepts like file handling, encryption, database management, testing, and modular programming in a real-world context. I'm proud of building something that’s both useful and educational.
 
-> **Note**: Please ensure you have Python 3.10+ installed and run setup.py before starting the program to initialize all required files. Then run: pip install -r requirements.txt.
+> **Note**: Please ensure you have Python 3.10+ installed,  run: pip install -r requirements.txt, and run setup.py before starting the program to initialize all required files.
 
 ---
 
