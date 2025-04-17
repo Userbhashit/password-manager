@@ -1,6 +1,5 @@
 import secrets
 
-# Character sets
 LETTERS_LOWER = "abcdefghijklmnopqrstuvwxyz"
 LETTERS_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 NUMBERS = "0123456789"
@@ -9,8 +8,8 @@ SYMBOLS = "!#$%&()*+"
 def main():
     # Get number of passwords to genrate from user
     num_password = get_num_passwords()
-    passwords = generate(num_password) # Genrate n random passwords 
-    
+    passwords = generate(num_password) # Genrate n random passwords
+
     # print them to user
     for i, pwd in enumerate(passwords, 1):
         print(f"{i}). {pwd}")
