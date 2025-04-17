@@ -1,5 +1,6 @@
 import secrets
 
+# Character sets
 LETTERS_LOWER = "abcdefghijklmnopqrstuvwxyz"
 LETTERS_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 NUMBERS = "0123456789"
